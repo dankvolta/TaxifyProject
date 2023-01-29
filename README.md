@@ -1,4 +1,4 @@
-                     #     ///////////////////////////// TAXIFY ////////////////////////////////////////
+                     #                                      TAXIFY :
  This repository will include a software development project 
 
 Taxify is an eco-friendly transportation company committed to operational excellence. Taxify offers
