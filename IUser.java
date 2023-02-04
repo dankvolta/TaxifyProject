@@ -9,7 +9,7 @@ public interface IUser {
 	public boolean getService();
 	public void setService(boolean s);
 	public void requestService();
-	public void rateService(Services service);
+	public void rateService(IServices service);  // we use the interface instead of the class itself
 	public String toString();
 	
 
