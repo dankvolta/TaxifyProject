@@ -1,6 +1,4 @@
 package taxify;
-// This  class  is  a  small  library  that  provides  functions  needed  by  the  application 
-// to calculate the distance between two locations or set a random location. 
 
 import java.util.Random;
 
