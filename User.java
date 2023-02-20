@@ -4,17 +4,17 @@ public class User implements IUser { // attributes: int id, string fname and lna
 	private int id;
 	private String firstName;
 	private String lastName;
-	private TaxiCompany company;
+	private ITaxiCompany company;
 	private boolean service;
 	
-	public User(int id, String firstName, String lastName, TaxiCompany company, boolean service) {
+	public User(int id, String firstName, String lastName, boolean service) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.company = company;
 		this.service = false;	// all users start by having no service yet
 			
 	}
+	
 	
 	@Override
 	public int getID() {
@@ -32,8 +32,13 @@ public class User implements IUser { // attributes: int id, string fname and lna
 	}
 	
 	@Override
-	public TaxiCompany getCompany() {
+	public ITaxiCompany getCompany() {
 		return this.company;
+	}
+	
+	@Override
+	public void setCompany(ITaxiCompany company) {
+		this.company = company;
 	}
 	
 	@Override
