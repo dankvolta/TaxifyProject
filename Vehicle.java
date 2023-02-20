@@ -5,25 +5,24 @@ import java.util.ArrayList;
 // implement Functions 
 import java.util.List;
 
-enum Status {FREE, PICKUP, SERVICE} 
 
 public abstract class Vehicle implements IVehicle{
 	private int id;
-	private TaxiCompany company;
-	private Status status;
-	private Location location;
-	private Location destination;
-	private Statistics statistics;
+	private ITaxiCompany company;
+	private VehicleStatus status;
+	private ILocation location;
+	private ILocation destination;
+	private IStatistics statistics;
 	private IServices service;
-	private List<Location> drive;
+	private List<ILocation> drive;
 	
-	public Vehicle(int id, TaxiCompany company, Location location) {
+	public Vehicle(int id,  ILocation location) {
 		this.id = id;
 		this.service = null;
 		this.location = location;
-		this.status = Status.FREE;
+		this.status = VehicleStatus.FREE;
 		this.location = location;
-		this.destination = (Location) ApplicationLibrary.randomLocation(this.location);
+		this.destination =  ApplicationLibrary.randomLocation(this.location);
 		this.statistics = new Statistics();		// we initialize this as new so all attributes are 0
 		this.drive = setDrivePathToDestination(this.location, this.destination);
 	}
@@ -34,12 +33,12 @@ public abstract class Vehicle implements IVehicle{
 	}
 
 	@Override
-	public Location getLocation() {
+	public ILocation getLocation() {
 		return this.location;
 	}
 
 	@Override
-	public Location getDestination() {
+	public ILocation getDestination() {
 		return this.destination;
 	}
 
@@ -49,8 +48,13 @@ public abstract class Vehicle implements IVehicle{
 	}
 
 	@Override
-	public Statistics getStatistics() {
+	public IStatistics getStatistics() {
 		return this.statistics;
+	}
+	
+	@Override
+	public void setCompany(ITaxiCompany company) {
+		this.company = company;
 	}
 
 	@Override
@@ -58,7 +62,7 @@ public abstract class Vehicle implements IVehicle{
 		this.service = s;
 		this.destination = service.getPickUp();
 		this.drive = setDrivePathToDestination(this.location, this.destination);
-		this.status = Status.PICKUP;
+		this.status = VehicleStatus.PICKUP;
 		
 	}
 
@@ -66,7 +70,7 @@ public abstract class Vehicle implements IVehicle{
 	public void startService() {
 		this.destination = this.service.getDropOff();		// we set the destination to the drop off location
 		this.drive =  setDrivePathToDestination(this.location, this.destination);
-        this.status = Status.SERVICE;
+        this.status = VehicleStatus.SERVICE;
 	}
 
 	@Override
@@ -83,10 +87,10 @@ public abstract class Vehicle implements IVehicle{
 			
 		}
 		// we update the distance, the drive the service and the status
-		this.destination = (Location) ApplicationLibrary.randomLocation(this.location);
+		this.destination = (ILocation) ApplicationLibrary.randomLocation(this.location);
 		this.drive = setDrivePathToDestination(this.location, this.destination); 		// we set a new path for the drive
 		this.service = null;
-		this.status = Status.FREE;
+		this.status = VehicleStatus.FREE;
 	}
 	
 
@@ -106,7 +110,7 @@ public abstract class Vehicle implements IVehicle{
 
 	@Override
 	public boolean isFree() {
-		return (this.status == Status.FREE);
+		return (this.status == VehicleStatus.FREE);
 	}
 
 	@Override
@@ -118,14 +122,14 @@ public abstract class Vehicle implements IVehicle{
 		if(this.drive.isEmpty()) {
 			if(this.service == null) {
 				// then the vehicle will continue its random drive
-				this.destination = (Location) ApplicationLibrary.randomLocation(this.location);
+				this.destination =  ApplicationLibrary.randomLocation(this.location);
 				this.drive = setDrivePathToDestination(this.location, this.destination);
 			}
 		}
 		else {
 			// we check is the vehicle has arrived to a pickup or dropp off
-			Location origin = this.service.getPickUp();
-			Location destination = this.service.getDropOff();
+			ILocation origin = this.service.getPickUp();
+			ILocation destination = this.service.getDropOff();
 			
 			// if the currents services origin and destination coincide with either the coordinates of the pick up or the drop off locations
 			if(this.location.getX() == origin.getX() && this.location.getY() == origin.getY()) {
@@ -144,16 +148,16 @@ public abstract class Vehicle implements IVehicle{
 	}
 
 	@Override
-	public String showDrive(List<Location> drive) {
+	public String showDrive(List<ILocation> drive) {
 		String s = " ";
-		for(Location l : drive) {
+		for(ILocation l : drive) {
 			s = s + l.toString() + " ";
 		}
 		return s;
 	}
 	
-	private List<Location> setDrivePathToDestination(Location location, Location destination) { 
-        List<Location> drive = new ArrayList<Location>();
+	private List<ILocation> setDrivePathToDestination(ILocation location, ILocation destination) { 
+        List<ILocation> drive = new ArrayList<ILocation>();
         
         // we set the coordinates
         int x1 = location.getX();
@@ -184,8 +188,8 @@ public abstract class Vehicle implements IVehicle{
 	 @Override
 	    public String toString() {
 	        return this.id + " at " + this.location + " driving to " + this.destination +
-	               ((this.status == Status.FREE) ? " is free with path " + showDrive(this.drive) : 
-	                ((this.status == Status.PICKUP) ? " to pickup user " + this.service.getUser().getID() : " in service "));
+	               ((this.status == VehicleStatus.FREE) ? " is free with path " + showDrive(this.drive) : 
+	                ((this.status == VehicleStatus.PICKUP) ? " to pickup user " + this.service.getUser().getID() : " in service "));
 	    }
 	    
 
