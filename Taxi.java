@@ -2,8 +2,8 @@ package taxify;
 
 public class Taxi extends Vehicle {
 
-	public Taxi(int id, TaxiCompany company, Location location) {
-		super(id, company, location);
+	public Taxi(int id, ILocation location) {
+		super(id, location);
 	}
 	
 	
@@ -11,6 +11,7 @@ public class Taxi extends Vehicle {
 	public int calculateCost() {
 		return super.calculateCost() * 2;
 	}
+	
 	
 	@Override
 	public String toString() {
