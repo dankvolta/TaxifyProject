@@ -1,11 +1,10 @@
 package taxify;
 
-import java.util.List;
 
 public class Shuttle extends Vehicle {
 	
-	public Shuttle(int id, TaxiCompany company, Location location) {
-		super(id, company, location);
+	public Shuttle(int id, ILocation location) {
+		super(id, location);
 		
 		
 	}
