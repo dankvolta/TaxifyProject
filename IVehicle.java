@@ -7,12 +7,13 @@ import java.util.List;
 public interface IVehicle {
 	
 	public int getId();
-	public Location getLocation();
-	public Location getDestination();
+	public ILocation getLocation();
+	public ILocation getDestination();
 	
 	public IServices getService();
-	public Statistics getStatistics();
+	public IStatistics getStatistics();
 	
+	public void setCompany(ITaxiCompany company);
 	public void pickService(IServices s);
 	public void startService();
 	public void endService();
@@ -25,7 +26,7 @@ public interface IVehicle {
 	
 	public int calculateCost();
 	
-	public String showDrive(List<Location> drive);
+	public String showDrive(List<ILocation> drive);
 	public String toString();
 
 }
