@@ -2,31 +2,40 @@ package taxify;
 import java.lang.Math;
 
 public class Services implements IServices{
-	private User user;
-	private Location pickup;
-	private Location dropoff;
+	private IUser user;
+	private ILocation pickup;
+	private ILocation dropoff;
 	private double stars;
 	
 	
-	public Services(User user, Location pickup, Location dropoff, double stars) {
+	public Services(IUser user, ILocation pickup, ILocation dropoff, double stars) {
 		this.user = user;
 		this.pickup = pickup;
 		this.dropoff = dropoff;
 		this.stars = 0.0;
 	}
 	
+	//            Services service = new Services(this.users.get(userIndex), origin, destination);
+
+	public Services(IUser user, ILocation pickup, ILocation dropoff) {
+		this.user = user;
+		this.pickup = pickup;
+		this.dropoff = dropoff;
+		
+	}
+	
 	@Override
-	public User getUser() {
+	public IUser getUser() {
 		return this.user;
 	}
 	
 	@Override
-	public Location getPickUp() {
+	public ILocation getPickUp() {
 		return this.pickup;
 	}
 	
 	@Override
-	public Location getDropOff() {
+	public ILocation getDropOff() {
 		return this.dropoff;
 	}
 	

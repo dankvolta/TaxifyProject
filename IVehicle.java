@@ -1,8 +1,5 @@
 package taxify;
 
-import java.util.List;
-
-
 
 public interface IVehicle {
 	
@@ -26,7 +23,7 @@ public interface IVehicle {
 	
 	public int calculateCost();
 	
-	public String showDrive(List<ILocation> drive);
+	public String showDrive();
 	public String toString();
 
 }

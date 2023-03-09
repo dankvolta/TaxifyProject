@@ -56,7 +56,7 @@ public abstract class Vehicle implements IVehicle{
 	public void setCompany(ITaxiCompany company) {
 		this.company = company;
 	}
-
+	
 	@Override
 	public void pickService(IServices s) {
 		this.service = s;
@@ -87,13 +87,16 @@ public abstract class Vehicle implements IVehicle{
 			
 		}
 		// we update the distance, the drive the service and the status
-		this.destination = (ILocation) ApplicationLibrary.randomLocation(this.location);
+		this.destination = ApplicationLibrary.randomLocation(this.location);
 		this.drive = setDrivePathToDestination(this.location, this.destination); 		// we set a new path for the drive
 		this.service = null;
 		this.status = VehicleStatus.FREE;
 	}
 	
-
+	
+	 
+     //When the Vehicle arrives at pick-up location the company is notified
+     // Starts ride service  
 	@Override
 	public void notifyArrivalPickUp(IVehicle v) {
 		this.company.arrivedAtPickupLocation(this);
@@ -113,6 +116,7 @@ public abstract class Vehicle implements IVehicle{
 		return (this.status == VehicleStatus.FREE);
 	}
 
+	// Simulates a vehicle moving from location to location 
 	@Override
 	public void move() {
 		// lets get the next location from the drive path
@@ -147,14 +151,17 @@ public abstract class Vehicle implements IVehicle{
 		return this.service.calculateDistance();
 	}
 
+	
 	@Override
-	public String showDrive(List<ILocation> drive) {
-		String s = " ";
-		for(ILocation l : drive) {
-			s = s + l.toString() + " ";
-		}
-		return s;
-	}
+    public String showDrive() {
+        String s = "";
+       
+           for (ILocation l : this.drive)
+               s = s + l.toString() + " ";
+       
+           return s;
+    }
+
 	
 	private List<ILocation> setDrivePathToDestination(ILocation location, ILocation destination) { 
         List<ILocation> drive = new ArrayList<ILocation>();
@@ -187,10 +194,8 @@ public abstract class Vehicle implements IVehicle{
 	
 	 @Override
 	    public String toString() {
-	        return this.id + " at " + this.location + " driving to " + this.destination +
-	               ((this.status == VehicleStatus.FREE) ? " is free with path " + showDrive(this.drive) : 
+		 return  this.id + " at " + this.location + " driving to " + this.destination +
+	               ((this.status == VehicleStatus.FREE) ? " is free with path " + showDrive() : 
 	                ((this.status == VehicleStatus.PICKUP) ? " to pickup user " + this.service.getUser().getID() : " in service "));
 	    }
-	    
-
 }

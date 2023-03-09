@@ -3,7 +3,7 @@ package taxify;
 import java.util.Random;
 
 public class ApplicationLibrary {
-    private static final int width = 10;
+    private static final int width = 10;   		// we have a 10x10 grid
     private static final int height = 10;    
 
     public static int rand() {
